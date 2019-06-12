@@ -36,6 +36,7 @@ GameObject.prototype.destroy = function () {
 
 function CharacterStats (character) {
   this.healthPoints = character.healthPoints;
+  GameObject.call(this, character);
 }
 
 CharacterStats.prototype = Object.create(GameObject.prototype);
@@ -61,6 +62,7 @@ function Humanoid (character) {
   this.team = character.team;
   this.weapons = character.weapons;
   this.language = character.language;
+  CharacterStats.call(this, character);
 }
 
 Humanoid.prototype = Object.create(CharacterStats.prototype);
