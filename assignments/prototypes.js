@@ -78,7 +78,55 @@ Humanoid.prototype.greet = function () {
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
 
-// Test you work by un-commenting these 3 objects and the list of console logs below:
+
+//VILLAIN ------------------------
+
+function Villain (character) {
+  Humanoid.call(this, character)
+}
+
+Villain.prototype = Object.create(Humanoid.prototype);
+
+Villain.prototype.attack = function(target){
+
+  if (target.healthPoints > 3) {
+    target.healthPoints -= 3;
+    return `${this.name} attacks ${target.name} with ${this.weapons}! ${target.name} has ${[target.healthPoints]} health points.`;
+  } else {
+    return `${this.name} attacks ${target.name} with ${this.weapons}! ${target.name} was DESTROYED.` ;
+  }
+};
+
+
+
+
+//HERO -----------------------
+
+function Hero (character) {
+  Humanoid.call(this, character)
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+Hero.prototype.attack = function(target){
+
+  if (target.healthPoints > 4) {
+    target.healthPoints -= 4;
+    return `${this.name} attacks ${target.name} with ${this.weapons}! ${target.name} has ${[target.healthPoints]} health points.`;
+  } else {
+    return `${this.name} attacks ${target.name} with ${this.weapons}! ${target.name} was DESTROYED.` ;
+  }
+};
+
+
+
+  // Stretch task: 
+  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+ 
+// Test your work by un-commenting these 3 objects and the list of console logs below:
 
 
   const mage = new Humanoid({
@@ -132,6 +180,38 @@ Humanoid.prototype.greet = function () {
     language: 'Elvish',
   });
 
+  const warlock = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Avantika',
+    team: 'Pirates',
+    weapons: [
+      'Hallowed Rapier',
+    ],
+    language: 'Common Tongue',
+  });
+
+  const fjord = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 2,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Fjord',
+    team: 'Mighty Nein',
+    weapons: [
+      'Hexblade',
+    ],
+    language: 'Common Tongue',
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -143,8 +223,15 @@ Humanoid.prototype.greet = function () {
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
+  console.log(
+`${warlock.attack(fjord)}
 
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+${fjord.attack(warlock)}
+
+${warlock.attack(fjord)}
+
+${fjord.attack(warlock)}
+
+${warlock.attack(fjord)}
+
+${fjord.attack(warlock)}`);
